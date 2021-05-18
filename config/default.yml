@@ -8,3 +8,11 @@ settings:
 database:
   type: better-sqlite3
   database: './db.sqlite3'
+
+intPorn: 
+  loginUri: https://forum.intporn.com/login
+  createChatUri: https://forum.intporn.com/conversations/add
+  file: ./temp/int_user.txt
+  resultFile: ./temp/int_result.json
+  user: thangnv
+  pwd: thangnv123

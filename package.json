@@ -28,10 +28,9 @@
     "@foal/cli": "^2.3.0",
     "@foal/core": "^2.0.0",
     "@foal/typeorm": "^2.0.0",
-    "axios": "^0.21.1",
-    "form-data": "^4.0.0",
     "puppeteer": "^9.1.1",
     "puppeteer-core": "^9.1.1",
+    "request": "^2.88.2",
     "source-map-support": "~0.5.19",
     "typeorm": "0.2.26",
     "yamljs": "~0.3.0"
