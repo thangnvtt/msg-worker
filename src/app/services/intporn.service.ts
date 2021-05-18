@@ -49,6 +49,7 @@ export class IntPornService {
                     error = [...error, ...err]
 
                     console.info('Not create chat success', subReceiver)
+                    console.info('errors', err)
                 }
 
                 if (parse.status === 'ok') {
