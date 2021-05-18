@@ -29,6 +29,7 @@
     "@foal/cli": "^2.3.0",
     "@foal/core": "^2.0.0",
     "@foal/typeorm": "^2.0.0",
+    "lodash": "^4.17.21",
     "pm2": "^4.5.6",
     "puppeteer": "^9.1.1",
     "puppeteer-core": "^9.1.1",

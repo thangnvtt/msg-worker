@@ -41,6 +41,7 @@ export class IntPornService {
         try {
             for (let start = 0, end = maxReceiver, next; end <= length;) {
                 const subReceiver = receiver.slice(start, end)
+                await page.reload()
                 const { body } = await this.createConversation(page, subReceiver)
                 const parse = JSON.parse(body)
 
@@ -51,6 +52,7 @@ export class IntPornService {
 
                     console.info('Not create chat success', subReceiver)
                     console.info('errors', err)
+                    continue
                 }
 
                 if (parse.status === 'ok') {
@@ -59,7 +61,6 @@ export class IntPornService {
                 }
 
                 await this.helpService.delay(delayTime)
-                await page.reload()
                 next = length - end
                 start += maxReceiver
                 end += next < maxReceiver && next !== 0 ? next : maxReceiver
@@ -67,8 +68,9 @@ export class IntPornService {
 
             this.helpService.writeFileJSON(outputFile, JSON.stringify({ success, failed, error }))
         }
-        catch {
+        catch (err) {
             this.helpService.writeFileJSON(outputFile, JSON.stringify({ success, failed, error }))
+            throw err
         }
     }
 

@@ -17,4 +17,9 @@ export class HelpService {
     writeFileJSON(path, data) {
         writeFileSync(path, data)
     }
+
+    readFileJSON(path) {
+        const data = readFileSync(path, { encoding: 'utf8' })
+        return JSON.parse(data)
+    }
 }
