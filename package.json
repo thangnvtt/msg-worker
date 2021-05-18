@@ -19,7 +19,8 @@
     "makemigrations": "foal rmdir build && tsc -p tsconfig.app.json && npx typeorm migration:generate --name migration && tsc -p tsconfig.app.json",
     "migrations": "npx typeorm migration:run",
     "revertmigration": "npx typeorm migration:revert",
-    "worker": "npm run build && node ./build/worker.js"
+    "worker": "npm run build && node ./build/worker.js",
+    "worker:pm2": "npm run build && pm2 start ./build/worker.js"
   },
   "engines": {
     "node": ">=8"
@@ -28,6 +29,7 @@
     "@foal/cli": "^2.3.0",
     "@foal/core": "^2.0.0",
     "@foal/typeorm": "^2.0.0",
+    "pm2": "^4.5.6",
     "puppeteer": "^9.1.1",
     "puppeteer-core": "^9.1.1",
     "request": "^2.88.2",

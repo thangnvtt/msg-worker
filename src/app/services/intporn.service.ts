@@ -28,6 +28,7 @@ export class IntPornService {
         await page.type('input[autocomplete=username]', this.username)
         await page.type('input[autocomplete=current-password]', this.password)
         await page.click('.button--icon--login')
+        await page.waitForNavigation({ waitUntil: 'networkidle0' })
         return page
     }
 
@@ -72,7 +73,7 @@ export class IntPornService {
     }
 
     async createConversation(page: Page, receiver: string[]): Promise<any> {
-        await page.goto(this.createChatUri)
+        await page.goto(this.createChatUri, { waitUntil: 'networkidle0' })
         const token = await this.getToken(page)
         const cookies = await this.getCookies(page)
         const options = this.getOptionCreateChat(receiver, cookies, token)
