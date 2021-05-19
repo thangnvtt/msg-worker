@@ -20,6 +20,7 @@ async function main() {
     const maxReceiver = 5
     const helper = createService(HelpService)
     const user = helper.loadReceiverFromFile(FILE_DATA)
+    user.reverse()
     let userNeedSend = new Array<string>()
     let userSended = new Array<any>()
 
