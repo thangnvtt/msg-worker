@@ -20,7 +20,7 @@ async function main() {
     const maxReceiver = 5
     const helper = createService(HelpService)
     const user = helper.loadReceiverFromFile(FILE_DATA)
-    let userNeedSend = []
+    let userNeedSend = new Array<string>()
     let userSended = new Array<any>()
 
     const intPorn = createService(IntPornService)

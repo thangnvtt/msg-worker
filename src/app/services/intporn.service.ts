@@ -7,6 +7,8 @@ const LOGIN_URI = Config.get('intPorn.loginUri', 'string') || ''
 const CREATE_CHAT_URL = Config.get('intPorn.createChatUri', 'string') || ''
 const USERNAME = Config.get('intPorn.user', 'string') || ''
 const PASSWORD = Config.get('intPorn.pwd', 'string') || ''
+const TITLE_MSG = Config.get('intPorn.message.title', 'string') || ''
+const BODY_MSG = Config.get('intPorn.message.body', 'string') || ''
 
 export class IntPornService {
     private urlLogin = LOGIN_URI
@@ -41,12 +43,11 @@ export class IntPornService {
         try {
             for (let start = 0, end = maxReceiver, next; end <= length;) {
                 const subReceiver = receiver.slice(start, end)
-                await page.reload()
                 const { body } = await this.createConversation(page, subReceiver)
                 const parse = JSON.parse(body)
 
                 if (parse.status === 'error') {
-                    const err = parse.errors
+                    const err = [parse.errors]
                     failed = [...failed, ...subReceiver]
                     error = [...error, ...err]
 
@@ -108,8 +109,8 @@ export class IntPornService {
             'formData': {
                 'tokens_select': convertReceiver,
                 'recipients': convertReceiver,
-                'title': 'Send you the best video, have a nice day',
-                'message_html': '<p><img src="https://imggen.eporner.com/1658717/1920/1080/8.jpg" class="fr-fic fr-dii"></p><p><strong>Download here: https://droplink.co/fawnx</strong></p>',
+                'title': TITLE_MSG,
+                'message_html': BODY_MSG,
                 '_xfToken': token,
                 '_xfRequestUri': '/conversations/add',
                 '_xfWithData': '1',
