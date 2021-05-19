@@ -5,22 +5,36 @@ import * as _ from 'lodash'
 const FILE_DATA = Config.get('intPorn.file', 'string') || ''
 const FILE_RESULT = Config.get('intPorn.resultFile', 'string') || ''
 
+function cacheFile(helperService: HelpService, pathFile, successData, failedData, errorData) {
+    let { success, failed, error } = helperService.readFileJSON(FILE_RESULT)
+    success = [...success, ...successData]
+    failed = [...failed, ...failedData]
+    error = [...error, ...errorData]
+
+    const data = { success, failed, error }
+    helperService.writeFileJSON(pathFile, JSON.stringify(data))
+}
+
 async function main() {
     const delay = 3 * 60 * 1000
     const maxReceiver = 5
     const helper = createService(HelpService)
-    const intFile = helper.loadReceiverFromFile(FILE_DATA)
-    const result = helper.readFileJSON(FILE_RESULT)
-    const success: string[] = _.isEmpty(result.success) ? [] : result.success
-    const diff = _.difference(intFile, success)
+    const user = helper.loadReceiverFromFile(FILE_DATA)
+    let userNeedSend = []
+    let userSended = new Array<any>()
 
     const intPorn = createService(IntPornService)
     const loginPage = await intPorn.login()
-    console.log(intFile.length, diff.length, success.length)
 
-    await intPorn.createConversationSchedule(loginPage, diff, delay, maxReceiver, FILE_RESULT)
+    do {
+        userNeedSend = _.difference(user, userSended)
+        const { success, failed, error } = await intPorn.createConversationSchedule(loginPage, userNeedSend, delay, maxReceiver)
+        userSended = [...userSended, ...success, ...failed]
+
+        cacheFile(helper, FILE_RESULT, success, failed, error)
+    } while (userSended.length < user.length)
 }
 
-main().catch(err => process.exit(1))
+main().catch(err => console.error(err))
 
 

@@ -32,7 +32,7 @@ export class IntPornService {
         return page
     }
 
-    async createConversationSchedule(page, receiver: string[], delayTime: number, maxReceiver = 5, outputFile): Promise<void> {
+    async createConversationSchedule(page, receiver: string[], delayTime: number, maxReceiver = 5): Promise<any> {
         const length = receiver.length
         let success = new Array<string>()
         let failed = new Array<string>()
@@ -66,12 +66,11 @@ export class IntPornService {
                 end += next < maxReceiver && next !== 0 ? next : maxReceiver
             }
 
-            this.helpService.writeFileJSON(outputFile, JSON.stringify({ success, failed, error }))
         }
         catch (err) {
-            this.helpService.writeFileJSON(outputFile, JSON.stringify({ success, failed, error }))
-            throw err
+            return { success, failed, error }
         }
+        return { success, failed, error }
     }
 
     async createConversation(page: Page, receiver: string[]): Promise<any> {
@@ -109,8 +108,8 @@ export class IntPornService {
             'formData': {
                 'tokens_select': convertReceiver,
                 'recipients': convertReceiver,
-                'title': 'Best Video',
-                'message_html': '<p><img src="https://imggen.eporner.com/1658717/1920/1080/8.jpg" class="fr-fic fr-dii"></p><p><strong>Download here: https://yoshare.net/</strong></p>',
+                'title': 'Send you the best video, have a nice day',
+                'message_html': '<p><img src="https://imggen.eporner.com/1658717/1920/1080/8.jpg" class="fr-fic fr-dii"></p><p><strong>Download here: https://droplink.co/fawnx</strong></p>',
                 '_xfToken': token,
                 '_xfRequestUri': '/conversations/add',
                 '_xfWithData': '1',
